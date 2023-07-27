@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-#define WAIT 11000
+#define WAIT 30000
 volatile short trigger=0;
 
 int gen_rand(int arr[], int size){
@@ -13,7 +13,7 @@ int gen_rand(int arr[], int size){
 }
 
 void ROP_CALL(int arr[], int l, int r, int x){
-    if((trigger==36)){
+    if((trigger==25)){
         __asm("movw	r16, r12");
         __asm("sbc	r17, r15");
         __asm("asr	r17");
@@ -40,6 +40,7 @@ int binarySearch(int arr[], int l, int r, int x)
     __asm("pop r17");
     __asm("pop r12");
     __asm("pop r16");
+    for(volatile int i=0;i<WAIT;i++){;}
 
     if (r >= l)
     {

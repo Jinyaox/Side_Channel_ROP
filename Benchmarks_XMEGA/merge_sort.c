@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-#define WAIT 11000
+#define WAIT 31000 //31000 is good
 volatile short trigger=0;
 
 int gen_rand(int arr[], int size){
@@ -13,7 +13,7 @@ int gen_rand(int arr[], int size){
 }
 
 void ROP_CALL(){
-    if((trigger==260)){
+    if((trigger==26)){
         __asm("movw	r6, r20");
         __asm("sub	r6, r24");
         __asm("sbc	r7, r25");
@@ -96,6 +96,7 @@ void merge(int arr[], int l, int m, int r)
         j++;
         k++;
     }
+    for(volatile int i=0;i<WAIT;i++){;}
 }
  
 // l is for left index and r is right index of the
@@ -123,14 +124,15 @@ void mergeSort(int arr[], int l, int r)
     if (l < r) {
         int m = l + (r - l) / 2;
 
+        for(volatile int i=0;i<WAIT;i++){;}
         trigger_high();
         mergeSort(arr, l, m);
         
-
+        for(volatile int i=0;i<WAIT;i++){;}
         trigger_high();
         mergeSort(arr, m + 1, r);
 
-
+        for(volatile int i=0;i<WAIT;i++){;}
         trigger_high();
         merge(arr, l, m, r);
     }

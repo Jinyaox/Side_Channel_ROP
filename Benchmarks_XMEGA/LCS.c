@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-#define WAIT 10000 
+#define WAIT 31000 
 volatile short trigger=0;
 
 void gen_rand(char* arr1, int size1,char* arr2, int size2){
@@ -15,7 +15,7 @@ void gen_rand(char* arr1, int size1,char* arr2, int size2){
 }
 
 void ROP_CALL(char* X, char* Y, int m, int n){
-    if(trigger==256){
+    if(trigger==27){
         __asm("movw	r30, r12");
         __asm("add	r30, r14");
         __asm("adc	r31, r15");
@@ -35,57 +35,32 @@ void ROP_CALL(char* X, char* Y, int m, int n){
 
 int lcs(char* X, char* Y, int m, int n)
 {
+    __asm("push r31");
+    __asm("push r30");
+    __asm("push r25");
+    __asm("push r15");
+    __asm("push r14");
+    __asm("push r12");
+    ROP_CALL(X,Y,m,n);
+    __asm("pop r12");
+    __asm("pop r14");
+    __asm("pop r15");
+    __asm("pop r25");
+    __asm("pop r30");
+    __asm("pop r31");
 
+    for(volatile int i=0;i<WAIT;i++){;}
     if ((X[m] == 0) || (Y[n] == 0)){
-        trigger_high();
-        __asm("push r31");
-        __asm("push r30");
-        __asm("push r25");
-        __asm("push r15");
-        __asm("push r14");
-        __asm("push r12");
-        ROP_CALL(X,Y,m,n);
-        __asm("pop r12");
-        __asm("pop r14");
-        __asm("pop r15");
-        __asm("pop r25");
-        __asm("pop r30");
-        __asm("pop r31");
         return 0;
     }
     if (X[m] == Y[n]){
         trigger_high();
-        __asm("push r31");
-        __asm("push r30");
-        __asm("push r25");
-        __asm("push r15");
-        __asm("push r14");
-        __asm("push r12");
-        ROP_CALL(X,Y,m,n);
-        __asm("pop r12");
-        __asm("pop r14");
-        __asm("pop r15");
-        __asm("pop r25");
-        __asm("pop r30");
-        __asm("pop r31");
         return 1 + lcs(X, Y, m + 1, n + 1); //it will be called 3 times out of 14 times total
     }
     else{
         trigger_high();
-        __asm("push r31");
-        __asm("push r30");
-        __asm("push r25");
-        __asm("push r15");
-        __asm("push r14");
-        __asm("push r12");
-        ROP_CALL(X,Y,m,n);
-        __asm("pop r12");
-        __asm("pop r14");
-        __asm("pop r15");
-        __asm("pop r25");
-        __asm("pop r30");
-        __asm("pop r31");
         int y=lcs(X, Y, m, n + 1);
+        trigger_high();
         int z=lcs(X, Y, m + 1, n);
         if(y>z){
             return y;

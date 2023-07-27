@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-#define WAIT 10000
+#define WAIT 31000
 volatile short trigger=0;
 
 int gen_rand(){
@@ -17,8 +17,8 @@ struct Graph {
 
 int vis[100];
 
-void ROP_CALL(struct Graph* G, int u){
-    if(trigger==14){
+void ROP_CALL(){
+    if(trigger==286){
         __asm("movw	r30, r14");
         __asm("add	r30, r30");
         __asm("adc	r31, r31");
@@ -52,13 +52,25 @@ void DFS(struct Graph* G, int u)
     __asm("pop r25");
     __asm("pop r30");
     __asm("pop r31");
-    for(volatile int i=0;i<WAIT;i++){;}
     
     vis[u] = 1;
     for (int v = 0; v < G->V; v++) {
+        for(volatile int i=0;i<WAIT;i++){;}
+        trigger_high();
         if (!vis[v] && G->Adj[u][v]) {
-            trigger_high();
             DFS(G, v);
+        }else{
+            __asm("push r31");
+            __asm("push r30");
+            __asm("push r25");
+            __asm("push r24");
+            __asm("push r14");
+            ROP_CALL();
+            __asm("pop r14");
+            __asm("pop r24");
+            __asm("pop r25");
+            __asm("pop r30");
+            __asm("pop r31");
         }
     }
 }
@@ -74,6 +86,7 @@ void DFStraversal(int V, int E, int row, int col)
 
     //the main loop here, each DFS calls 
     while(1){
+        for(volatile int i=0;i<WAIT;i++){;}
         memset(vis,0,100*sizeof(int));
         for(int i=0;i<row;i++){
             for(int j=0;j<col;j++){
@@ -83,10 +96,23 @@ void DFStraversal(int V, int E, int row, int col)
         trigger=trigger%256;
 
         for (int i = 0; i < G.V; i++) {
+            for(volatile int i=0;i<WAIT;i++){;}
+            trigger_high();
             if (!vis[i]) {
-                trigger_high();
                 DFS(&G, i);
-            }
+            }else{
+                __asm("push r31");
+                __asm("push r30");
+                __asm("push r25");
+                __asm("push r24");
+                __asm("push r14");
+                ROP_CALL();
+                __asm("pop r14");
+                __asm("pop r24");
+                __asm("pop r25");
+                __asm("pop r30");
+                __asm("pop r31");
+            }   
         }
     }
 }

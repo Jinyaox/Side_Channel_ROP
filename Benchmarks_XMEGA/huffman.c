@@ -1,6 +1,6 @@
 #include "hal.h"
 #include <string.h>
-#define WAIT 1000 //31000 is good
+#define WAIT 31000 //31000 is good
 volatile short trigger=0;
 
 void gen_rand(char* arr1, int size,int arr2[]){
@@ -34,7 +34,7 @@ typedef struct Heap Heap;
 
 
 void ROP_CALL(){
-    if(trigger==20){
+    if(trigger==260){
         __asm("ld	r20, Y");
         __asm("ldd	r21, Y+1	; 0x01");
         __asm("andi	r30, 0xFE	; 254");
@@ -72,8 +72,11 @@ void heapify_bottom_top(Heap *h,int index){ //12 total bottom up called
         temp = h->arr[parent_node];
         h->arr[parent_node] = h->arr[index];
         h->arr[index] = temp;
+        for(volatile int i=0;i<WAIT;i++){;}
         trigger_high();
         heapify_bottom_top(h,parent_node);
+    }else{
+        for(volatile int i=0;i<WAIT;i++){;}
     }
 }
 
@@ -83,12 +86,20 @@ void insert(Heap *h, MinHeapNode key){
         trigger_high();
         heapify_bottom_top(h, h->count);
         h->count++;
-    }else{
-        for(volatile int i=0;i<WAIT;i++){;}
     }
 }
 
 void heapify_top_bottom(Heap *h, int parent_node){
+    __asm("push r31");
+    __asm("push r30");
+    __asm("push r21");
+    __asm("push r20");
+    ROP_CALL();
+    __asm("pop r20");
+    __asm("pop r21");
+    __asm("pop r30");
+    __asm("pop r31");
+
     int left = parent_node*2+1;
     int right = parent_node*2+2;
     int min;
@@ -106,12 +117,15 @@ void heapify_top_bottom(Heap *h, int parent_node){
     if(right != -1 && h->arr[right].freq < h->arr[min].freq)
         min = right;
 
+    for(volatile int i=0;i<WAIT;i++){;}
+    
     if(min != parent_node){
         temp = h->arr[min];
         h->arr[min] = h->arr[parent_node];
         h->arr[parent_node] = temp;
 
         // recursive  call
+        trigger_high();
         heapify_top_bottom(h, min);
     }
 }
@@ -122,6 +136,7 @@ MinHeapNode PopMin(Heap *h){
     pop = h->arr[0];
     h->arr[0] = h->arr[h->count-1];
     h->count--;
+    trigger_high();
     heapify_top_bottom(h, 0);
     return pop;
 }
@@ -164,6 +179,8 @@ int main(void)
     int size = sizeof(arr) / sizeof(arr[0]);
     
     while(1){
+
+        for(volatile int i=0;i<WAIT;i++){;}
         trigger=trigger%256;
         gen_rand(arr,5,freq);
         build_huffman_tree(arr, freq, size);
