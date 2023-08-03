@@ -1,0 +1,10 @@
+DFS Program INFO:
+
+Whole Program ~ 18800 samples
+
+ROP call 52 times making about 361 samples per call
+
+350:4 patterns
+300:4 patterns
+250:3 patterns
+200:3 patterns

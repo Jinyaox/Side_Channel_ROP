@@ -11,11 +11,13 @@ int vis[100];
 // Function for DFS traversal
 void DFS(struct Graph* G, int u)
 {
-    printf("DFS CALLED\n");
     vis[u] = 1;
     for (int v = 0; v < G->V; v++) {
         if (!vis[v] && G->Adj[u][v]) {
+            printf("DFS CALLED\n");
             DFS(G, v);
+        }else{
+            printf("DFS CALLED\n");
         }
     }
 }
@@ -45,17 +47,15 @@ void DFStraversal(int V, int E, int row, int col)
     for(int i=0;i<row;i++){
         for(int j=0;j<col;j++){
             G.Adj[i][j]=1;
-            // if(rand_bool(i+j)){
-            //     G.Adj[i][j]=1;
-            // }
-            // else{
-            //     G.Adj[i][j]=0;
-            // }
         }
     }
     for (int i = 0; i < G.V; i++) {
         if (!vis[i]) {
+            printf("DFS CALLED\n");
             DFS(&G, i);
+        }
+        else{
+            printf("DFS CALLED\n");
         }
     }
 }

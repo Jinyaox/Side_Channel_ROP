@@ -1,0 +1,12 @@
+huffman Program INFO:
+
+Whole Program ~ 26600 samples
+
+ROP call 28 times each about 950 samples 
+
+900: 11 patterns
+800: 10 patterns
+700: 8 patterns
+500: 6 patterns
+400: 7 patterns
+300: 6 patterns

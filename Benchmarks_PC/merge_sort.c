@@ -1,4 +1,12 @@
 #include <stdio.h>
+#include <stdlib.h>
+
+int gen_rand(int arr[], int size){
+    for(int i=0;i<size;i++){
+        arr[i]=rand();
+    }
+    return arr[rand()%size];
+}
 
 void merge(int arr[], int l, int m, int r)
 {
@@ -56,18 +64,17 @@ void mergeSort(int arr[], int l, int r)
     printf("Sort Called\n");
     if (l < r) {
         int m = l + (r - l) / 2;
- 
         // Sort first and second halves
         mergeSort(arr, l, m);
         mergeSort(arr, m + 1, r);
- 
         merge(arr, l, m, r);
     }
 }
 
 int main()
 {
-    int arr[] = { 12, 11, 13, 5, 6, 7 };
+    int arr[] = { 12, 11, 13, 5, 6, 7, 6, 12, 12};
+    gen_rand(arr,9);
     int arr_size = sizeof(arr) / sizeof(arr[0]);
     mergeSort(arr, 0, arr_size - 1);
     return 0;

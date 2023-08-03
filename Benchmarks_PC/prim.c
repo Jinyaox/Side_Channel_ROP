@@ -64,8 +64,8 @@ void primMST(int graph[V][V])
         mstSet[u] = true;
  
         for (int v = 0; v < V; v++){
+            printf("Here\n");
             if (graph[u][v] && mstSet[v] == false && graph[u][v] < key[v]){
-                printf("Here\n");
                 parent[v] = u, key[v] = graph[u][v];
             }
         }

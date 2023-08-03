@@ -45,7 +45,7 @@ void BellmanFord(struct Graph* graph, int src)
     for (i = 1; i <= V-1; i++)
 
     {
-
+        count++;
         for (j = 0; j < E; j++)
 
         {
@@ -57,8 +57,8 @@ void BellmanFord(struct Graph* graph, int src)
             int weight = graph->edge[j].weight;
 
             if (dist[u] + weight < dist[v]){
-                //total of 12 times used
                 dist[v] = dist[u] + weight;
+            }else{
             }
         }
 

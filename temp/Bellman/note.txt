@@ -1,0 +1,10 @@
+Bellman Ford Program INFO:
+
+Whole Program ~ 89100 samples
+
+ROP call 162 times each about 550 samples 
+
+500: 5 patterns
+450: 5 patterns
+350: 3 patterns
+250: 2 patterns

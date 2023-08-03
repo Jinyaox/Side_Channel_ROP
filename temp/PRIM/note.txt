@@ -1,0 +1,10 @@
+PRIM Program INFO:
+
+Whole Program ~ 8800 samples
+
+ROP call 20 times each around 440 samples
+
+400: 5 patterns
+350: 4 patterns
+300: 4 patterns
+250: 4 patterns

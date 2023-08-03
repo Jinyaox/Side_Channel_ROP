@@ -1,0 +1,11 @@
+Rabinkarp Program INFO:
+
+Whole Program ~ 11400 samples
+
+ROP call 19 times each around 600 samples
+
+600: 5 patterns
+500: 4 patterns
+400: 4 patterns
+250: 4 patterns
+100: 4 patterns

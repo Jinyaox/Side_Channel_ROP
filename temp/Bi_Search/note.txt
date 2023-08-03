@@ -1,0 +1,10 @@
+Binary Search Program INFO:
+
+Whole Program ~ 2000 samples
+
+Each Recursive Call takes in 450 samples
+
+400: 6 patterns
+350: 5 patterns
+300: 3 patterns
+250: 3 patterns

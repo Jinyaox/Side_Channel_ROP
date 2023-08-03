@@ -1,0 +1,12 @@
+huffman Program INFO:
+
+Whole Program ~ 20700 samples
+
+ROP call 24 times each about 862 samples in average
+
+Merge: 1000 samples
+Merge_sort: 450 samples
+
+800: 7 patterns
+700: 7 patterns
+500: 10 patterns

@@ -20,14 +20,10 @@ int FW(int size, FILE * fp)
             for (j = 0; j < size; j++)
             {
                 if (graph[i][j] > graph[i][k] + graph[k][j]){
-                    count++;
                     graph[i][j] = graph[i][k] + graph[k][j];
-                    fprintf(fp, "If branch taken at iteration %d\n",iteration);
                 }
                 else{
-                    fprintf(fp, "Else Branch Taken at iteration %d\n",iteration);
                 }
-                iteration++;
             }
         }
     }

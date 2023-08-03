@@ -4,6 +4,15 @@
 #define d 10
 int iteration=0;
 
+void gen_rand(char* arr1, int size1,char* arr2, int size2){
+    for(int i=0;i<size1;i++){
+        arr1[i]=(char)rand();
+    }
+    for(int i=0;i<size2;i++){
+        arr2[i]=(char)rand();
+    }
+}
+
 void search(char pat[], char txt[], int result[], int q, FILE * fp)
 {
     int M = strlen(pat);
@@ -34,6 +43,8 @@ void search(char pat[], char txt[], int result[], int q, FILE * fp)
                 result[k]=i;
                 k++;
             }
+        }else{
+            fprintf(fp, "1st Else branch taken at iteration %d\n",iteration);
         }
 
         if (i < N - M) {
@@ -53,12 +64,13 @@ void search(char pat[], char txt[], int result[], int q, FILE * fp)
 /* Driver program to test above function */
 int main()
 {
-    char txt[] = "AABAACAADAABAABA";
-    char pat[] = "AABA";
+    char txt[] = "AABAACAADAA";
+    char pat[] = "AAB";
     int result[19]; memset(result,0,19*sizeof(int));
     FILE *fp;
     fp = fopen("testing_info_Rabinkarp.txt", "w+");
     int q = 103; 
+    gen_rand(txt,12,pat,4);
     search(pat, txt, result, q,fp);
     fclose(fp);
     return 0;

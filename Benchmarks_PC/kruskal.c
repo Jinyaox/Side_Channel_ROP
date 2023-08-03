@@ -68,8 +68,12 @@ void makeSet(int parent[], int rank[], int n)
 // Function to find the parent of a node
 int findParent(int parent[], int component)
 {
-    if (parent[component] == component)
+    if (parent[component] == component){
+        printf("total\n");
         return component;
+    }else{
+        printf("total\n");
+    }
  
     return findParent(parent, parent[component]);
 }
@@ -113,7 +117,6 @@ void kruskalAlgo(int n, int edge[n][3])
     int minCost = 0;
 
     for (int i = 0; i < n; i++) {
-        printf("total\n");
         int v1 = findParent(parent, edge[i][0]);
         int v2 = findParent(parent, edge[i][1]);
         int wt = edge[i][2];
@@ -122,9 +125,11 @@ void kruskalAlgo(int n, int edge[n][3])
         // means they are in different sets so
         // union them
         if (v1 != v2) {
-            //printf("H\n");
+            printf("total\n");
             unionSet(v1, v2, parent, rank, n);
             minCost += wt;
+        }else{
+            printf("total\n");
         }
     }
 }

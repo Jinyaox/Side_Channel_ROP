@@ -1,0 +1,12 @@
+Kruskal Program INFO:
+
+Whole Program ~ 13120 samples
+
+ROP call 25 times making about 524 samples per call
+
+500: 8 patterns
+450: 6 patterns
+400: 5 patterns
+350: 4 patterns
+250: 3 patterns
+100: 3 patterns

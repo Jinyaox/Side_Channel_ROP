@@ -1,0 +1,10 @@
+PRIM Program INFO:
+
+Whole Program ~ Too large to calculate
+
+ROP call 4096 times each around 360 samples
+
+350: 2 patterns
+300: 2 patterns
+250: 2 patterns
+

@@ -1,5 +1,15 @@
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
+
+void gen_rand(char* arr1, int size,int arr2[]){
+    for(int i=0;i<size;i++){
+        arr1[i]=(char)rand();
+    }
+    for(int i=0;i<size;i++){
+        arr2[i]=rand();
+    }
+}
 
 struct MinHeapNode {
  
@@ -48,6 +58,7 @@ void heapify_top_bottom(Heap *h, int parent_node){
     int right = parent_node*2+2;
     int min;
     MinHeapNode temp;
+    printf("Total Called\n");
 
     if(left >= h->count || left <0)
         left = -1;
@@ -113,6 +124,7 @@ int main()
  
     char arr[] = { 'a', 'b', 'c', 'd', 'e', 'f' };
     int freq[] = { 5, 9, 12, 13, 16, 45 };
+    gen_rand(arr,5,freq);
  
     int size = sizeof(arr) / sizeof(arr[0]);
  
