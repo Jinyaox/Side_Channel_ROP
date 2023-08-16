@@ -8,3 +8,5 @@ ROP call 162 times each about 550 samples
 450: 5 patterns
 350: 3 patterns
 250: 2 patterns
+
+The bellman ford has really good detection discrepancy for clustered but not non-clustered ones. !!! 
