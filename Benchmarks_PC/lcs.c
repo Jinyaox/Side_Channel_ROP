@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 void gen_rand(char* arr1, int size1,char* arr2, int size2){
     for(int i=0;i<size1;i++){
@@ -13,7 +14,6 @@ void gen_rand(char* arr1, int size1,char* arr2, int size2){
 
 int lcs(char* X, char* Y, int m, int n)
 {
-    printf("NOt\n");
     if ((X[m] == 0) || (Y[n] == 0)){
         return 0;
     }
@@ -36,6 +36,17 @@ int main(void)
 {
     char X[] = "BD";
     char Y[] = "ABCD";
-    gen_rand(X,2,Y,4);
-    volatile int z=lcs(X, Y, 0, 0);
+    FILE *fp;
+    fp = fopen("LCS_timing.txt", "w");
+
+    clock_t begin = clock();
+
+    for (int i=0;i<100;i++){
+        gen_rand(X,2,Y,4);
+        volatile int z=lcs(X, Y, 0, 0);
+        clock_t end = clock();
+        double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+        fprintf(fp, "%.9f\n",time_spent);
+    }
+    fclose(fp);
 }

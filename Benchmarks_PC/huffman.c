@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include<time.h>
 
 void gen_rand(char* arr1, int size,int arr2[]){
     for(int i=0;i<size;i++){
@@ -124,11 +125,20 @@ int main()
  
     char arr[] = { 'a', 'b', 'c', 'd', 'e', 'f' };
     int freq[] = { 5, 9, 12, 13, 16, 45 };
-    gen_rand(arr,5,freq);
- 
-    int size = sizeof(arr) / sizeof(arr[0]);
- 
-    build_huffman_tree(arr, freq, size);
+    FILE *fp;
+    fp = fopen("huffman_timing.txt", "w");
+
+    for (int i=0;i<100;i++){
+        gen_rand(arr,5,freq);
+        int size = sizeof(arr) / sizeof(arr[0]);
+
+        clock_t begin = clock();
+        build_huffman_tree(arr, freq, size);
+        clock_t end = clock();
+        double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+        fprintf(fp, "%.9f\n",time_spent);
+    }
+    fclose(fp);
  
     return 0;
 }
